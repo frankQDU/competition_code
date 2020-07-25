@@ -34,4 +34,13 @@ def reduce_mem_usage(df, verbose=True,feature_name = []):
     if verbose: print('Mem. usage decreased to {:5.2f} Mb ({:.1f}% reduction)'.format(end_mem, 100 * (start_mem - end_mem) / start_mem))
     return df
 
-
+def timmer(func):
+    def wrapper(*args,**kwargs):
+        start_time = time.time()
+        result=func(*args,**kwargs)
+        end_time = time.time()
+        m, s = divmod(end_time - start_time, 60)
+        h, m = divmod(m, 60)
+        print(f'{int(h)}:{int(m)}:{s}')
+        pass
+    return wrapper
