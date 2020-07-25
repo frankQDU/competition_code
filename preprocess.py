@@ -42,5 +42,5 @@ def timmer(func):
         m, s = divmod(end_time - start_time, 60)
         h, m = divmod(m, 60)
         print(f'{int(h)}:{int(m)}:{s}')
-        pass
+        return result
     return wrapper
