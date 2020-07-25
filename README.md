@@ -1,2 +1,4 @@
 # competition_code
-some common python code in data mining competition
+一些在数据挖掘比赛中常用的code
+
+
