@@ -82,3 +82,34 @@ def timmer(func):
         print(f'{int(h)}:{int(m)}:{s}')
         return result
     return wrapper
+
+
+def gen_w2v_features(df, value):
+    from tqdm import tqdm
+    from gensim.models import Word2Vec
+    w2v_dim = 50
+    df[value] = df[value].astype(str)
+    text_ = df.groupby(['user']).apply(lambda x: x[value].tolist()).reset_index()
+    texts = text_[0].values.tolist()
+    w2v = Word2Vec(texts, size=w2v_dim, window=10, iter=45,
+               workers=12, seed=1017, min_count=5)
+
+    vacab = w2v.wv.vocab.keys()
+    w2v_feature = np.zeros((len(texts), w2v_dim))
+    w2v_feature_avg = np.zeros((len(texts), w2v_dim))
+
+    for i, line in tqdm(enumerate(texts)):
+        num = 0
+        if line == '':
+            w2v_feature_avg[i, :] = np.zeros(w2v_dim)
+        else:
+            for word in line:
+                num += 1
+                vec = w2v[word] if word in vacab else np.zeros(w2v_dim)
+                w2v_feature[i, :] += vec
+            w2v_feature_avg[i, :] = w2v_feature[i, :] / num
+    w2v_avg = pd.DataFrame(w2v_feature_avg)
+    
+    w2v_avg.columns = [f'{value}_w2v_avg_{i}' for i in w2v_avg.columns]
+    w2v_avg['user'] = text_['user'].tolist()
+    return w2v_avg
