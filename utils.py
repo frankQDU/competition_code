@@ -113,3 +113,12 @@ def gen_w2v_features(df, value):
     w2v_avg.columns = [f'{value}_w2v_avg_{i}' for i in w2v_avg.columns]
     w2v_avg['user'] = text_['user'].tolist()
     return w2v_avg
+
+
+def cal_ks(y_true, y_pred):
+    ## KS值 在实际操作时往往使用ROC曲线配合求出KS值
+    from sklearn.metrics import roc_curve
+    FPR,TPR,thresholds=roc_curve(y_true, y_pred)
+    KS=abs(FPR-TPR).max()
+    print('KS值：',KS)
+    return KS
