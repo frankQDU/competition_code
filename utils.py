@@ -122,3 +122,8 @@ def cal_ks(y_true, y_pred):
     KS=abs(FPR-TPR).max()
     print('KS值：',KS)
     return KS
+    
+    
+    
+    
+    
