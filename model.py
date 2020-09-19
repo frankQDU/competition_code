@@ -92,3 +92,28 @@ def train_model_xgb(X, y, test, params, feature_col, n_splits=10):
         test_pred += xgb_model.predict(xgb.DMatrix(test[feature_col])) / n_splits
     
     return train_pred, test_pred, fi
+
+xgb_paras = {'objective': 'reg:squarederror',
+ 'tree_method': 'gpu_hist',
+ 'eval_metric': 'rmse',
+ 'learning_rate': 0.02,
+ 'alpha': 0.30328974897294075,
+ 'colsample_bytree': 0.5068082755866445,
+ 'lambda': 72.2173472522586,
+ 'max_depth': 9,
+ 'min_child_weight': 5,
+ 'subsample': 0.8170133539039669}
+lgb_paras = {'objective': 'regression',
+ 'metric': 'rmse',
+ 'learning_rate': 0.02,
+ 'num_threads': -1,
+ 'early_stopping_rounds': 100,
+ 'num_boost_round': 10000,
+ 'bagging_fraction': 0.9978192061670864,
+ 'bagging_freq': 1,
+ 'feature_fraction': 0.5234178718477926,
+ 'max_depth': 7,
+ 'min_child_weight': 1,
+ 'num_leaves': 41,
+ 'reg_alpha': 0.1415592188002883,
+ 'reg_lambda': 2.2724007900790895}
