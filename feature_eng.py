@@ -61,7 +61,12 @@ def kfold_encoding_feature(df_tr, df_te, feats, n_splits):
             dict_moe, colname_moe = cal_moe(tmp_trn, feat)
 
             if fold_==0:
-                df_tr[colname] = None
+                df_tr[colname_woe] = None
+                df_tr[colname_cat] = None
+                df_tr[colname_js ] = None
+                df_tr[colname_loe] = None
+                df_tr[colname_moe] = None
+
                 kfold_features.append(colname_woe)
                 kfold_features.append(colname_cat)
                 kfold_features.append(colname_js)
@@ -100,7 +105,7 @@ def kfold_encoding_feature(df_tr, df_te, feats, n_splits):
 
         order_label = df_tr.groupby([feat])[colname_loe].mean()
         df_te[colname_loe] = df_te[feat].map(order_label)
-        
+
         order_label = df_tr.groupby([feat])[colname_moe].mean()
         df_te[colname_moe] = df_te[feat].map(order_label)
 
