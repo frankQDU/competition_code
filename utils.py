@@ -3,6 +3,15 @@ import numpy as np
 import pandas as pd
 import xgboost as xgb
 
+def get_file_info(path):
+    import os
+    from os.path import join,getsize
+    for root, _, files in os.walk(path):
+        for file in files:
+            path_ = join(root, file).replace('\\','/')
+            print(f'the size of {path_} is {round(getsize(path_)/(1024 ** 2) , 5)} M')
+
+
 def check_consistence(X_train,X_test,feature_col):
     from sklearn.model_selection import train_test_split
     from sklearn.metrics import roc_auc_score
