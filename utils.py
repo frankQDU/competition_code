@@ -4,6 +4,9 @@ import pandas as pd
 import xgboost as xgb
 
 def get_file_info(path):
+    '''
+    目录下文件信息
+    '''
     import os
     from os.path import join,getsize
     for root, _, files in os.walk(path):
